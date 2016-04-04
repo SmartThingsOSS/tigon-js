@@ -1,3 +1,9 @@
+/*!
+ * Tigon - Javascript and mobile client communication
+ * https://github.com/SmartThingsOSS/tigon-js
+ * Apache 2.0 License | (c) SmartThings, Inc.
+ */
+
 import bowser from 'bowser';
 import { createUUID, isFunction } from './utils';
 
@@ -22,7 +28,7 @@ class Tigon {
 	 * @param callback
 	 */
 	addMessageHandler(callback) {
-		if (isFunction(callback)) {
+		if (isFunction(mcallback)) {
 			this.messageHandlers.push(callback);
 		}
 	}
