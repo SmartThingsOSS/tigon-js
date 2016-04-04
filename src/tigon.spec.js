@@ -1,4 +1,3 @@
-import bowser from 'bowser';
 import Tigon from './tigon';
 import * as utils from './utils';
 
@@ -26,20 +25,25 @@ describe('tigon', () => {
 	});
 	
 	describe('send()', () => {
+		let agent;
+
 		beforeEach(() => {
+			agent = {};
 			sinon.stub(utils, 'createUUID').returns('uuid');
+			sinon.stub(utils, 'getUserAgent').returns(agent);
+
+			// The following code will force getUserAgent to get called for each test
+			delete require.cache[require.resolve('./tigon')];
+			tigon = new (require('./tigon').default)();
 		});
 
 		afterEach(() => {
-			bowser.ios = false;
-			bowser.android = false;
-			bowser.tizen = false;
-			bowser.windowsphone = false;
 			utils.createUUID.restore();
+			utils.getUserAgent.restore();
 		});
 
 		it('should call ios message handler', () => {
-			bowser.ios = true;
+			agent.ios = true;
 			window.webkit = {
 				messageHandlers: {
 					tigon: {
@@ -62,7 +66,7 @@ describe('tigon', () => {
 		});
 
 		it('should call android message handler', () => {
-			bowser.android = true;
+			agent.android = true;
 			window.tigonMessageHandler = {
 				handleMessage: sinon.stub()
 			};
@@ -81,7 +85,7 @@ describe('tigon', () => {
 		});
 
 		it('should call tizen message handler', () => {
-			bowser.tizen = true;
+			agent.tizen = true;
 			window.tigonMessageHandler = {
 				handleMessage: sinon.stub()
 			};
@@ -101,7 +105,7 @@ describe('tigon', () => {
 
 
 		it('should call windows message handler', () => {
-			bowser.windowsphone = true;
+			agent.windowsphone = true;
 			window.external = {
 				notify: sinon.stub()
 			};

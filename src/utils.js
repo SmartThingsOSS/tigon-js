@@ -10,3 +10,13 @@ export function createUUID() {
 export function isFunction(thing) {
 	return thing && typeof thing === 'function';
 }
+
+export function getUserAgent() {
+	const userAgent = navigator && navigator.userAgent || '';
+	return {
+		ios: /(ipod|iphone|ipad)/i.test(userAgent),
+		android: /(android)/i.test(userAgent),
+		windowsPhone: /windows phone/i.test(userAgent),
+		tizen: /tizen/i.test(userAgent)
+	}
+}

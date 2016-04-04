@@ -4,17 +4,20 @@
  * Apache 2.0 License | (c) SmartThings, Inc.
  */
 
-import bowser from 'bowser';
-import { createUUID, isFunction } from './utils';
+import * as utils from './utils';
+const agent = utils.getUserAgent();
 
 class Tigon {
+	/**
+	 * Create a new Tigon object
+	 * @param options - {
+	 *      defaultMessageHandler: () => {}
+     *  }
+	 */
 	constructor(options) {
 		this.messageHandlers = [];
 		this.messages = new Map();
-
-		if (options) {
-			this.defaultMessageHandler = options.defaultMessageHandler || null;
-		}
+		this.defaultMessageHandler = options && options.defaultMessageHandler || null;
 	}
 
 	_removeMessage(id) {
@@ -28,7 +31,7 @@ class Tigon {
 	 * @param callback
 	 */
 	addMessageHandler(callback) {
-		if (isFunction(mcallback)) {
+		if (utils.isFunction(callback)) {
 			this.messageHandlers.push(callback);
 		}
 	}
@@ -52,7 +55,7 @@ class Tigon {
 		if (!message) return;
 
 		const messageForClient = {
-			id: createUUID(),
+			id: utils.createUUID(),
 			payload: message
 		};
 
@@ -64,11 +67,11 @@ class Tigon {
 
 			const strMsg = JSON.stringify(messageForClient);
 
-			if (bowser.ios) {
+			if (agent.ios) {
 				webkit.messageHandlers.tigon.postMessage(messageForClient);
-			} else if (bowser.android || bowser.tizen) {
+			} else if (agent.android || agent.tizen) {
 				window.tigonMessageHandler.handleMessage(strMsg);
-			} else if (bowser.windowsphone) {
+			} else if (agent.windowsphone) {
 				window.external.notify(strMsg);
 			} else {
 				if (this.defaultMessageHandler) {
@@ -97,7 +100,7 @@ class Tigon {
 	 */
 	receivedSuccessResponse(id, payload) {
 		const message = this._removeMessage(id);
-		if (message && isFunction(message.onSuccess)) {
+		if (message && utils.isFunction(message.onSuccess)) {
 			message.onSuccess(payload);
 		}
 	}
@@ -109,7 +112,7 @@ class Tigon {
 	 */
 	receivedErrorResponse(id, error) {
 		const message = this._removeMessage(id);
-		if (message && isFunction(message.onError)) {
+		if (message && utils.isFunction(message.onError)) {
 			message.onError(error);
 		}
 	}
