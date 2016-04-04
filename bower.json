@@ -1,0 +1,17 @@
+{
+	"name": "tigon",
+	"version": "1.0.0",
+	"main": [
+		"dist/tigon.js"
+	],
+	"ignore": [
+		"**/.*",
+		"src/",
+		"webpack/",
+		"karma.conf.js",
+		"package.json"
+	],
+	"keywords": [
+		"tigon"
+	]
+}
