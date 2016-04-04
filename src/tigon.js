@@ -11,7 +11,7 @@ class Tigon {
 	constructor(options) {
 		this.messageHandlers = [];
 		this.messages = new Map();
-		
+
 		if (options) {
 			this.defaultMessageHandler = options.defaultMessageHandler || null;
 		}
@@ -65,7 +65,7 @@ class Tigon {
 			const strMsg = JSON.stringify(messageForClient);
 
 			if (bowser.ios) {
-				webkit.messageHandlers.tigon.postMessage(strMsg);
+				webkit.messageHandlers.tigon.postMessage(messageForClient);
 			} else if (bowser.android || bowser.tizen) {
 				window.tigonMessageHandler.handleMessage(strMsg);
 			} else if (bowser.windowsphone) {
