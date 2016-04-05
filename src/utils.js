@@ -18,5 +18,5 @@ export function getUserAgent() {
 		android: /(android)/i.test(userAgent),
 		windowsPhone: /windows phone/i.test(userAgent),
 		tizen: /tizen/i.test(userAgent)
-	}
+	};
 }

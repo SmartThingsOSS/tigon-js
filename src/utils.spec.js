@@ -3,7 +3,7 @@ import * as utils from './utils';
 describe('utils', () => {
 	describe('isFunction()', () => {
 		it('should determine if something is a function', () => {
-			expect(utils.isFunction(function () {})).to.equal(true);
+			expect(utils.isFunction(function test() {})).to.equal(true);
 			expect(utils.isFunction(1)).to.equal(false);
 			expect(utils.isFunction({})).to.equal(false);
 		});

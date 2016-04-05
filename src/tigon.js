@@ -52,7 +52,7 @@ class Tigon {
 	 * @param message - the message you want to send to the client
 	 */
 	send(message) {
-		if (!message) return;
+		if (!message) return Promise.reject('No message was sent.');
 
 		const messageForClient = {
 			id: utils.createUUID(),

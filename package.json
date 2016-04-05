@@ -23,9 +23,12 @@
 	},
 	"devDependencies": {
 		"babel-core": "6.7.4",
+		"babel-eslint": "6.0.2",
 		"babel-loader": "6.2.4",
 		"babel-preset-es2015": "6.6.0",
 		"chai": "3.5.0",
+		"eslint": "2.7.0",
+		"eslint-config-smartthings": "2.4.0",
 		"expose-loader": "0.7.1",
 		"karma": "0.13.22",
 		"karma-chai": "0.1.0",
@@ -48,7 +51,7 @@
 	"scripts": {
 		"test": "karma start",
 		"test-watch": "karma start --auto-watch",
-		"lint": "eslint --config .eslintrc './src/client/**/*.js'",
+		"lint": "eslint --config .eslintrc './src/**/*.js'",
 		"build": "NODE_ENV=production webpack --config webpack/webpack.config.js --verbose --colors --display-error-details",
 		"build-global": "NODE_ENV=production webpack --config webpack/webpack.config.global.js --verbose --colors --display-error-details",
 		"release": "npm run build && npm run build-global"

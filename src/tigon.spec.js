@@ -23,7 +23,7 @@ describe('tigon', () => {
 			expect(tigon.messageHandlers[0]).to.equal(test2);
 		});
 	});
-	
+
 	describe('send()', () => {
 		let agent;
 
@@ -34,7 +34,8 @@ describe('tigon', () => {
 
 			// The following code will force getUserAgent to get called for each test
 			delete require.cache[require.resolve('./tigon')];
-			tigon = new (require('./tigon').default)();
+			const RefreshTigon = require('./tigon').default; // eslint-disable-line global-require
+			tigon = new RefreshTigon();
 		});
 
 		afterEach(() => {
@@ -57,8 +58,13 @@ describe('tigon', () => {
 				data: 'test'
 			});
 
-			const expectedMessage = '{"id":"uuid","payload":{"id":123,"data":"test"}}';
-			expect(webkit.messageHandlers.tigon.postMessage).to.have.been.calledWithExactly(expectedMessage);
+			expect(webkit.messageHandlers.tigon.postMessage).to.have.been.calledWithExactly({
+				id: 'uuid',
+				payload: {
+					id: 123,
+					data: 'test'
+				}
+			});
 			const callbacks = tigon.messages.get('uuid');
 			expect(utils.isFunction(callbacks.onSuccess)).to.equal(true);
 			expect(utils.isFunction(callbacks.onError)).to.equal(true);
@@ -146,11 +152,11 @@ describe('tigon', () => {
 			});
 
 			return promise.then(() => {
-					throw new Error('No error should be thrown here.');
-				})
-				.catch(err => {
-					expect(err).to.equal('Browser/OS is not supported.');
-				});
+				throw new Error('No error should be thrown here.');
+			})
+			.catch(err => {
+				expect(err).to.equal('Browser/OS is not supported.');
+			});
 		});
 	});
 
