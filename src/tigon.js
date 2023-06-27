@@ -1,7 +1,7 @@
 /*!
  * Tigon - Javascript and mobile client communication
  * https://github.com/SmartThingsOSS/tigon-js
- * Apache 2.0 License | (c) SmartThings, Inc.
+ * Apache 2.0 License | (c) Samsung Electronics Co., LTD.
  */
 
 import * as utils from './utils';
